@@ -1,5 +1,5 @@
-# Products-Web-Scraper
-A Web-Scraper that parses Ukrainian e-commerce websites and selects the best option among all available product
+# Web Scraper
+A web scraper that parses Ukrainian e-commerce websites and selects the best option among all available product
 
 To do:
 ## Websites
