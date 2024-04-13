@@ -4,12 +4,12 @@ A Web-Scraper that parses Ukrainian e-commerce websites and selects the best opt
 To do:
 ## Websites
 - [x] Foxtrot
-- [] Allo
-- [] Defis
-- [] Comfy
+- [ ] Allo
+- [ ] Defis
+- [ ] Comfy
 
 ## Features
-- [] Pagination
-- [] Choosing best optimal product
-- [] Filtering by field
-- [] Sorting by field
+- [ ] Pagination
+- [ ] Choosing best optimal product
+- [ ] Filtering by field
+- [ ] Sorting by field
