@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
+import time
 
 AVAILABLE = ["В наявності", "Закінчується"]
 FOXTROT_BASE = "https://www.foxtrot.com.ua"
@@ -12,7 +13,7 @@ def get_urls(link):
     hrefs = soup.find_all("div", "card__image")
 
     urls = []
-    for i, div_element in enumerate(hrefs):
+    for div_element in hrefs:
         a_el = div_element.find_all("a", href=True)
         urls.append(FOXTROT_BASE + a_el[0]['href'])
     return urls
@@ -22,6 +23,7 @@ def is_available(url):
     request = requests.get(url).text
     soup = BeautifulSoup(request, 'html.parser')
     div_el = soup.find(class_="product-box__status")
+
     if div_el is None:
         return False
 
@@ -34,9 +36,7 @@ def filter_by_available(urls):
 
 
 def get_main_blocks(soup):
-    class_ = "main-details__block"
-    main_blocks = soup.find_all("div", class_=class_)
-    return main_blocks
+    return soup.find_all("div", class_="main-details__block")
 
 
 def get_name_and_value(block):
@@ -44,20 +44,16 @@ def get_name_and_value(block):
 
 
 def get_name(block):
-    div_el = block.find("span")
-    name = div_el.text.strip(" \n")
-    return name
+    return block.find("span").text.strip(" \n")
 
 
 def get_value(block):
     span_el = block.find(class_="main-details__item_value").find("span")
     p_el = span_el.find("p")
-    text = ''
     if p_el is not None:
         text = p_el.text
     else:
-        a_el = span_el.find("a")
-        text = a_el.text
+        text = span_el.find("a").text
 
     return text.strip(" \n")
 
@@ -84,13 +80,14 @@ def concat_df(*args):
 
 def main():
     link = "https://www.foxtrot.com.ua/uk/shop/girobordi_elektrosamokat.html"
-    urls = get_urls(link)
-    dfs = []
-    for i in urls:
-        dfs.append(props_to_df(get_properties(i)))
+    links = get_urls(link)
+    dfs = [props_to_df(get_properties(i)) for i in links]
     final_df = concat_df(tuple(dfs))
     final_df.to_excel("output1.xlsx", sheet_name="Електросамокати", index=True)
 
 
 if __name__ == "__main__":
+    start = time.time()
     main()
+    end = time.time()
+    print(f"Foxtrot parsed in: {(end-start):.3f}s")
