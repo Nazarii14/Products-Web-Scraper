@@ -1,4 +1,4 @@
-# Web Scraper
+# Web Scraper (in dev)
 A web scraper that parses Ukrainian e-commerce websites and selects the best option among all available product
 
 To do:
