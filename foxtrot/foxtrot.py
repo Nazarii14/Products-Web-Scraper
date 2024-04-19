@@ -91,7 +91,7 @@ def check_listing_pagination(url):
     return pagination is not None
 
 
-def get_last_page(url):
+def get_number_of_pages(url):
     if not check_listing_pagination(url):
         return url
 
@@ -107,7 +107,7 @@ def get_pages(url):
     if not check_listing_pagination(url):
         return [url]
 
-    last_page = get_last_page(url)
+    last_page = get_number_of_pages(url)
     if "page=1" in url:
         return [url.replace("page=1", f"page={i}") for i in range(1, last_page+1)]
     return [url] + [url + f"&page={i}" for i in range(2, last_page+1)]
