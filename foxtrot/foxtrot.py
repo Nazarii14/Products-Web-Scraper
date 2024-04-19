@@ -83,13 +83,6 @@ def create_df(urls):
     return concat_df(tuple(dfs))
 
 
-def main():
-    url = "https://www.foxtrot.com.ua/uk/search?query=%D0%BF%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%96+%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B8&page=1"
-    urls = get_urls_from_pages(get_pages(url))
-    final_df = create_df(urls)
-    final_df.to_excel("output2.xlsx", sheet_name="Пральні машини", index=True)
-
-
 def check_listing_pagination(url):
     paginated_class = "listing__pagination"
     request = requests.get(url).text
@@ -127,18 +120,15 @@ def get_urls_from_pages(pages):
     return urls
 
 
+def main():
+    url = "https://www.foxtrot.com.ua/uk/search?query=%D0%BF%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%96+%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B8&page=1"
+    urls = get_urls_from_pages(get_pages(url))
+    final_df = create_df(urls)
+    final_df.to_excel("output2.xlsx", sheet_name="Пральні машини", index=True)
+
+
 if __name__ == "__main__":
     start = time.time()
-
     main()
-
-    # url1 = "https://www.foxtrot.com.ua/uk/search?query=%D0%BF%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%96+%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B8&page=1"
-    # url2 = "https://www.foxtrot.com.ua/uk/search?query=%D0%BF%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%96+%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B8"
-    # url3 = "https://www.foxtrot.com.ua/uk/shop/girobordi_elektrosamokat.html"
-    #
-    # print(len(get_urls_from_pages(get_pages(url1))))
-    # print(len(get_urls_from_pages(get_pages(url2))))
-    # print(len(get_urls_from_pages(get_pages(url3))))
-
     end = time.time()
     print(f"Foxtrot parsed in: {(end-start):.3f}s")
